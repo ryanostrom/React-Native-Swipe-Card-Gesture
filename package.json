@@ -1,0 +1,24 @@
+{
+  "name": "react-native-swipe-card-gesture",
+  "version": "0.0.1",
+  "description": "Swipe cards with gestures",
+  "main": "SwipeCards.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanostrom/React-Native-Swipe-Card-Gesture.git"
+  },
+  "keywords": [
+    "react-native",
+    "card",
+    "swipe"
+  ],
+  "author": "Ryan Ostrom",
+  "license": "MIT",
+  "homepage": "https://github.com/ryanostrom/React-Native-Swipe-Card-Gesture.git#readme",
+  "dependencies": {
+    "clamp": "^1.0.1"
+  }
+}
