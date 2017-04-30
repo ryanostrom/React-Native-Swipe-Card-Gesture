@@ -17,7 +17,8 @@ import clamp from 'clamp';
 
 import Defaults from './Defaults.js';
 
-const viewport = Dimensions.get('window')
+const { width, height } = Dimensions.get('window');
+
 const SWIPE_THRESHOLD = 120;
 
 const styles = StyleSheet.create({
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     borderRadius: 5,
     right: 0,
+    backgroundColor: 'transparent',
   },
   yesText: {
     fontSize: 16,
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     left: 0,
+    backgroundColor: 'transparent',
   },
   noText: {
     fontSize: 16,
@@ -461,7 +464,7 @@ export default class SwipeCards extends Component {
 
     let noOpacity = pan.x.interpolate({ inputRange: [-SWIPE_THRESHOLD, -(SWIPE_THRESHOLD/2)], outputRange: [1, 0], extrapolate: 'clamp' });
     let noScale = pan.x.interpolate({ inputRange: [-SWIPE_THRESHOLD, 0], outputRange: [1, 0], extrapolate: 'clamp' });
-    let animatedNoStyles = { transform: [{ scale: noScale }], opacity: noOpacity };
+    let animatedNoStyles = { transform: [{ scale: noScale }], opacity: noOpacity, bottom: ((height / 2) - 50) };
 
     if (this.props.renderNo) {
       return this.props.renderNo(pan);
@@ -514,7 +517,7 @@ export default class SwipeCards extends Component {
 
     let yesOpacity = pan.x.interpolate({ inputRange: [(SWIPE_THRESHOLD/2), SWIPE_THRESHOLD], outputRange: [0, 1], extrapolate: 'clamp' });
     let yesScale = pan.x.interpolate({ inputRange: [0, SWIPE_THRESHOLD], outputRange: [0.5, 1], extrapolate: 'clamp' });
-    let animatedYesStyles = { transform: [{ scale: yesScale }], opacity: yesOpacity };
+    let animatedYesStyles = { transform: [{ scale: yesScale }], opacity: yesOpacity, bottom: ((height / 2) - 50) };
 
     if (this.props.renderYes) {
       return this.props.renderYes(pan);

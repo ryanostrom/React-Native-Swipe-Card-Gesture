@@ -1,6 +1,6 @@
 {
   "name": "react-native-swipe-card-gesture",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Swipe cards with gestures",
   "main": "SwipeCards.js",
   "scripts": {
