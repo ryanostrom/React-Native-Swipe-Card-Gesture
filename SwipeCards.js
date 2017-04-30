@@ -83,12 +83,12 @@ export default class SwipeCards extends Component {
     stackOffsetX: React.PropTypes.number,
     stackOffsetY: React.PropTypes.number,
     renderNoMoreCards: React.PropTypes.func,
-    showYup: React.PropTypes.bool,
+    showYes: React.PropTypes.bool,
     showMaybe: React.PropTypes.bool,
-    showNope: React.PropTypes.bool,
-    handleYup: React.PropTypes.func,
+    showNo: React.PropTypes.bool,
+    handleYes: React.PropTypes.func,
     handleMaybe: React.PropTypes.func,
-    handleNope: React.PropTypes.func,
+    handleNo: React.PropTypes.func,
     yesText: React.PropTypes.string,
     yesView: React.PropTypes.element,
     maybeText: React.PropTypes.string,
@@ -113,15 +113,15 @@ export default class SwipeCards extends Component {
     stackDepth: 5,
     stackOffsetX: 25,
     stackOffsetY: 0,
-    showYup: true,
+    showYes: true,
     showMaybe: true,
-    showNope: true,
-    handleYup: (card) => null,
+    showNo: true,
+    handleYes: (card) => null,
     handleMaybe: (card) => null,
-    handleNope: (card) => null,
-    noText: "Nope!",
+    handleNo: (card) => null,
+    noText: "No!",
     maybeText: "Maybe!",
-    yesText: "Yup!",
+    yesText: "Yes!",
     onClickHandler: () => { alert('tap') },
     onDragStart: () => {},
     onDragRelease: () => {},
@@ -203,16 +203,16 @@ export default class SwipeCards extends Component {
           const hasMovedUp = hasSwipedVertically && this.state.pan.y._value < 0
 
           if (hasMovedRight) {
-            cancelled = this.props.handleYup(this.state.card);
+            cancelled = this.props.handleYes(this.state.card);
           } else if (hasMovedLeft) {
-            cancelled = this.props.handleNope(this.state.card);
+            cancelled = this.props.handleNo(this.state.card);
           } else if (hasMovedUp && this.props.hasMaybeAction) {
             cancelled = this.props.handleMaybe(this.state.card);
           } else {
             cancelled = true
           }
 
-          //Yup or no was cancelled, return the card to normal.
+          //Yes or no was cancelled, return the card to normal.
           if (cancelled) {
             this._resetPan();
             return;
@@ -456,24 +456,24 @@ export default class SwipeCards extends Component {
     </Animated.View>;
   }
 
-  renderNope() {
+  renderNo() {
     let {pan} = this.state;
 
     let noOpacity = pan.x.interpolate({ inputRange: [-SWIPE_THRESHOLD, -(SWIPE_THRESHOLD/2)], outputRange: [1, 0], extrapolate: 'clamp' });
     let noScale = pan.x.interpolate({ inputRange: [-SWIPE_THRESHOLD, 0], outputRange: [1, 0], extrapolate: 'clamp' });
-    let animatedNopeStyles = { transform: [{ scale: noScale }], opacity: noOpacity };
+    let animatedNoStyles = { transform: [{ scale: noScale }], opacity: noOpacity };
 
-    if (this.props.renderNope) {
-      return this.props.renderNope(pan);
+    if (this.props.renderNo) {
+      return this.props.renderNo(pan);
     }
 
-    if (this.props.showNope) {
+    if (this.props.showNo) {
 
       const inner = this.props.noView
         ? this.props.noView
         : <Text style={styles.noText}>{this.props.noText}</Text>
 
-      return <Animated.View style={[styles.no, animatedNopeStyles]}>
+      return <Animated.View style={[styles.no, animatedNoStyles]}>
                 {inner}
               </Animated.View>;
     }
@@ -509,24 +509,24 @@ export default class SwipeCards extends Component {
     return null;
   }
 
-  renderYup() {
+  renderYes() {
     let {pan} = this.state;
 
     let yesOpacity = pan.x.interpolate({ inputRange: [(SWIPE_THRESHOLD/2), SWIPE_THRESHOLD], outputRange: [0, 1], extrapolate: 'clamp' });
     let yesScale = pan.x.interpolate({ inputRange: [0, SWIPE_THRESHOLD], outputRange: [0.5, 1], extrapolate: 'clamp' });
-    let animatedYupStyles = { transform: [{ scale: yesScale }], opacity: yesOpacity };
+    let animatedYesStyles = { transform: [{ scale: yesScale }], opacity: yesOpacity };
 
-    if (this.props.renderYup) {
-      return this.props.renderYup(pan);
+    if (this.props.renderYes) {
+      return this.props.renderYes(pan);
     }
 
-    if (this.props.showYup) {
+    if (this.props.showYes) {
 
       const inner = this.props.yesView
         ? this.props.yesView
         : <Text style={styles.yesText}>{this.props.yesText}</Text>;
 
-        return <Animated.View style={[styles.yes, animatedYupStyles]}>
+        return <Animated.View style={[styles.yes, animatedYesStyles]}>
                 {inner}
               </Animated.View>;
     }
@@ -538,9 +538,9 @@ export default class SwipeCards extends Component {
     return (
       <View style={styles.container}>
         {this.props.stack ? this.renderStack() : this.renderCard()}
-        {this.renderNope()}
+        {this.renderNo()}
         {this.renderMaybe()}
-        {this.renderYup()}
+        {this.renderYes()}
       </View>
     );
   }
